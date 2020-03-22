@@ -9,7 +9,7 @@ pip install git+https://github.com/ks93/xlogger.git
 ### use:
 ```python
 from xlogger.logger import logger
-logger.info('foo')
+logger.info('foo') # 2020-03-22 23:12:19,692 - <stdin> - INFO - foo
 ```
 
 ### setup:
