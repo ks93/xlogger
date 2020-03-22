@@ -1,6 +1,6 @@
 # xlogger
 
-a cross-project logger instance - creating a new file every midnight
+a cross-project logger instance for logging across files in a project | creating a new file every midnight
 ### install:
 ```bash
 pip install git+https://github.com/ks93/xlogger.git
