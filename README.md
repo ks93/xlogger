@@ -1,4 +1,4 @@
-# xlogger
+# [STAGING] xlogger
 
 a cross-project logger instance for logging across files in a project | creating a new file every midnight
 ### install:
