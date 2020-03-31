@@ -24,7 +24,13 @@ from xlogger.logger import logger
 logger.info('bar') # 2020-03-22 23:22:11,578 - utils - INFO - bar
 ```
 
-The `logger` is used exactly like in Python's [`logging`](https://docs.python.org/3.7/library/logging.html) module.
+These two calls, also result in a log file, `app.log`:
+```
+2020-03-22 23:12:19,692 - app - INFO - foo
+2020-03-22 23:22:11,578 - utils - INFO - bar
+```
+
+Otherwise, `logger` is used exactly like in Python's [`logging`](https://docs.python.org/3.7/library/logging.html) module.
 
 ### setup:
 Available setups are: log file path, log level for file and log level for console.
