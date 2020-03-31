@@ -21,7 +21,7 @@ logger.info('foo') # 2020-03-22 23:12:19,692 - app - INFO - foo
 ```python
 # utils.py
 from xlogger.logger import logger
-logger.info('bar') # 2020-03-22 23:12:19,692 - utils - INFO - bar
+logger.info('bar') # 2020-03-22 23:22:11,578 - utils - INFO - bar
 ```
 
 The `logger` is used exactly like in Python's [`logging`](https://docs.python.org/3.7/library/logging.html) module.
