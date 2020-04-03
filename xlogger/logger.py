@@ -1,25 +1,27 @@
 # core
 import logging
-from logging.handlers import TimedRotatingFileHandler
+import logging.config
+import json
 import os
+from utils.json_parse import extract_keys
 
-# Set up logging.
-default_log_dir = 'logs/'
-log_name = os.path.join(os.getenv('LOG_FILE_PATH', default_log_dir),'app.log')
+configration_file = 'default_logging.conf'
 
-if default_log_dir in log_name:
-    if not os.path.exists(log_name):
+def configure_logger(configration_file_path, logger_name):
+    # load the json object from logging configuration file.
+    configuration_dict = dict()
+    with open(configration_file_path) as file:
+        configuration_dict = json.load(file)
+
+    # Can be multiple filename in the configuration. Now currently only selects the first one.
+    path_to_logs = extract_keys(configuration_dict, 'filename')
+    log_name = str(path_to_logs[0])
+
+    # make the log directory if it does not exist.
+    if not os.path.exists(os.path.dirname(log_name)):
         os.makedirs(os.path.dirname(log_name))
+    logging.config.dictConfig(configuration_dict)
+    
+    return logging.getLogger(logger_name)
 
-logger = logging.getLogger(log_name)
-logger.setLevel(logging.DEBUG)
-# Logging information to specified file.
-log_file_handler = TimedRotatingFileHandler(log_name, when = 'midnight', interval = 1)
-log_file_handler.setLevel(os.getenv('LOG_LEVEL_FILE', 'DEBUG'))
-log_file_handler.setFormatter(logging.Formatter('%(asctime)s - %(module)s - %(levelname)s - %(message)s'))
-# Prints logging information to console.
-log_console_handler = logging.StreamHandler()
-log_console_handler.setLevel(os.getenv('LOG_LEVEL_CONSOLE', 'DEBUG'))
-log_console_handler.setFormatter(logging.Formatter('%(asctime)s - %(module)s - %(levelname)s - %(message)s'))
-logger.addHandler(log_file_handler)
-logger.addHandler(log_console_handler)
+logger = configure_logger(configration_file, 'development')
