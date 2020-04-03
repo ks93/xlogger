@@ -1,27 +1,30 @@
 # core
 import logging
 import logging.config
-import json
 import os
-from utils.json_parse import extract_keys
 
-configration_file = 'default_logging.conf'
+# internal
+from .config import config
 
-def configure_logger(configration_file_path, logger_name):
-    # load the json object from logging configuration file.
-    configuration_dict = dict()
-    with open(configration_file_path) as file:
-        configuration_dict = json.load(file)
-
-    # Can be multiple filename in the configuration. Now currently only selects the first one.
-    path_to_logs = extract_keys(configuration_dict, 'filename')
-    log_name = str(path_to_logs[0])
-
-    # make the log directory if it does not exist.
-    if not os.path.exists(os.path.dirname(log_name)):
+# initialise logger
+log_type = 'production'
+log_name = config['handlers']['file']['filename']
+if not os.path.exists(os.path.dirname(log_name)):
         os.makedirs(os.path.dirname(log_name))
-    logging.config.dictConfig(configuration_dict)
-    
-    return logging.getLogger(logger_name)
+logging.config.dictConfig(config)
+logger = logging.getLogger(log_type)
 
-logger = configure_logger(configration_file, 'development')
+def update_config():
+    log_name = config['handlers']['file']['filename']
+    if not os.path.exists(os.path.dirname(log_name)):
+            os.makedirs(os.path.dirname(log_name))
+    logging.config.dictConfig(config)
+    logger = logging.getLogger(log_type)
+
+def set_production():
+    log_type = 'production'
+    update_config()
+
+def set_development():
+    log_type = 'development'
+    update_config()

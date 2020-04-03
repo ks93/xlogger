@@ -1,4 +1,4 @@
-{
+config = {
     "version": 1,
     "formatters": {
         "default": {
@@ -7,6 +7,10 @@
         },
         "advanced":{
             "format":"%(asctime)s.%(msecs)03d - %(module)s - %(process)s - %(name)s - %(threadName)s - %(levelname)s - %(module)s - %(funcName)s:%(lineno)d - %(message)s",
+            "datefmt":"%d/%m/%Y %H:%M:%S"
+        },
+        "csv":{
+            "format":"%(asctime)s.%(msecs)03d,%(module)s,%(process)s,%(name)s,%(threadName)s,%(levelname)s,%(module)s,%(funcName)s:%(lineno)d,%(message)s",
             "datefmt":"%d/%m/%Y %H:%M:%S"
         }
     },

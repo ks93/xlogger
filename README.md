@@ -1,6 +1,6 @@
 # xlogger
 
-A cross-project logger instance for logging across files in a project. Basically a convenience layer on top of Python's `logging` module. 
+A cross-project logger instance for logging across files in a project. Basically a convenience layer on top of Python's `logging` module.
 
 By importing the logger instance into different files in a project, the logger automatically writes to the same file, and each log line states which file it came from.
 
@@ -32,20 +32,16 @@ These two calls, also result in a log file, `app.log`:
 
 Otherwise, `logger` is used exactly like in Python's [`logging`](https://docs.python.org/3.7/library/logging.html) module.
 
-### setup:
-Available setups are: log file path, log level for file and log level for console.
-Choose one of the follwing log levels (in order): `DEBUG`, `INFO`, `WARNING`, `ERROR`, `CRITICAL`
+### advanced use:
+to change settings like log file location, log levels, etc.:
+```python
+# app.py
+from xlogger.logger import logger
+from xlogger.config import config
+from xlogger.logger import update_config
 
-#### ubuntu:
-```bash
-export LOG_FILE_PATH=/your/logfile/path/
-export LOG_LEVEL_FILE={DEBUG/INFO/WARNING/ERROR/CRITICAL}
-export LOG_LEVEL_CONSOLE={DEBUG/INFO/WARNING/ERROR/CRITICAL}
-```
-
-#### windows:
-```cmd
-set LOG_FILE_PATH="/your/logfile/path/"
-set LOG_LEVEL_FILE={"DEBUG"/"INFO"/"WARNING"/"ERROR"/"CRITICAL"}
-set LOG_LEVEL_CONSOLE={"DEBUG"/"INFO"/"WARNING"/"ERROR"/"CRITICAL"}
+logger.info('bar') # logs/app.log: 2020-03-22 23:22:11,578 - utils - INFO - bar
+config['handlers']['file']['filename'] = 'logs/new_log_file.txt' # other things can be configured here too.
+update_config() # remember to update config fo make new config work.
+logger.info('new bar') # logs/new_log_file.txt: 2020-03-22 23:22:11,578 - utils - INFO - new bar
 ```
